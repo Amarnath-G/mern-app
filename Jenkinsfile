@@ -22,6 +22,13 @@ pipeline {
                     def frontendChanged = false
                     def backendChanged = false
 
+                    if (!changeLog || changeLog.size() == 0) {
+                        // First run or no changes detected
+                        frontendChanged = true
+                        backendChanged = true
+                        echo "No changelog detected. Forcing full build."
+                    } 
+                    else{
                     for (changeSet in changeLog) {
                         for (entry in changeSet.items) {
                             for (file in entry.affectedFiles) {
@@ -32,6 +39,7 @@ pipeline {
                                 }
                             }
                         }
+                    }
                     }
 
                     env.FRONTEND_CHANGED = frontendChanged.toString()
