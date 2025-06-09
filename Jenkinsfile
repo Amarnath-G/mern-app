@@ -22,6 +22,7 @@ pipeline {
                     def frontendChanged = false
                     def backendChanged = false
 
+                    echo "$changeLog.size()"
                     if (!changeLog || changeLog.size() == 0) {
                         // First run or no changes detected
                         frontendChanged = true
